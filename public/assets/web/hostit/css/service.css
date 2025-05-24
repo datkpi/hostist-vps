@@ -1,0 +1,201 @@
+.price_section {
+    padding: 90px 0;
+    background-color: #f8f9fa;
+}
+
+.heading_container {
+    margin-bottom: 45px;
+    text-align: center;
+}
+
+.price_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.box {
+    background-color: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    margin-bottom: 30px;
+}
+
+.box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.detail-box {
+    padding: 30px;
+}
+
+.detail-box h2 {
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+}
+
+.detail-box h2 span {
+    font-size: 1rem;
+    color: #666;
+}
+
+.detail-box h6 {
+    font-weight: 600;
+    color: #1d73de;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.price_features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.price_features li {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 30px;
+}
+
+.price_features li:before {
+    content: "✓";
+    color: #1d73de;
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+.price_features li:last-child {
+    border-bottom: none;
+}
+
+.btn-box {
+    padding: 20px 30px 30px;
+    text-align: center;
+}
+
+.btn-box a {
+    display: inline-block;
+    background-color: #1d73de;
+    color: #fff;
+    padding: 12px 35px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-box a:hover {
+    background-color: #0d5fc0;
+    transform: scale(1.05);
+}
+
+/* Invoice Modal Styles */
+.invoice-header {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.payment-info {
+    background-color: #1d73de;
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.unpaid-badge {
+    background-color: #ffeaea;
+    color: #dc3545;
+    padding: 3px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.paid-badge {
+    background-color: #e6ffee;
+    color: #28a745;
+    padding: 3px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.invoice-company-info {
+    margin-top: 20px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.qr-code {
+    max-width: 120px;
+    margin: 0 auto;
+    display: block;
+}
+
+.invoice-table th, .invoice-table td {
+    padding: 12px 15px;
+}
+
+/* "PAID" watermark */
+.paid-watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    font-size: 100px;
+    color: rgba(40, 167, 69, 0.15);
+    font-weight: bold;
+    pointer-events: none;
+    z-index: 1;
+    display: none;
+}
+
+/* Show watermark when paid */
+.is-paid .paid-watermark {
+    display: block;
+}
+
+/* Add paid status ribbon */
+.paid-ribbon {
+    position: absolute;
+    top: 30px;
+    right: -30px;
+    transform: rotate(45deg);
+    background-color: #28a745;
+    color: white;
+    padding: 5px 40px;
+    font-weight: bold;
+    z-index: 2;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: none;
+}
+
+/* Show ribbon when paid */
+.is-paid .paid-ribbon {
+    display: block;
+}
+
+/* Modal Scrolling Fix */
+.modal-dialog {
+    max-height: 90vh;
+}
+
+.modal-content {
+    max-height: 90vh;
+}
+
+.modal-body {
+    overflow-y: auto;
+    max-height: calc(90vh - 120px); /* Adjust for header and footer height */
+}
