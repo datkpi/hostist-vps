@@ -15,16 +15,27 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('username')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+
+            // Thông tin cá nhân bổ sung
+            $table->string('phone')->nullable();
+            $table->string('avatar')->nullable();
+            $table->text('address')->nullable();
+
+            // Trường cho phân quyền
+            $table->enum('role', ['user', 'admin', 'super_admin'])->default('user');
+            $table->boolean('is_active')->default(true);
+            $table->timestamp('last_login_at')->nullable();
+
+            // Token và timestamps
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes(); // Cho phép xóa mềm
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('users');

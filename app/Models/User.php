@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +22,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'is_active',
+        'last_login_at',
+        'username',
+        'phone',
+        'avatar',
+        'address'
     ];
 
     /**
@@ -40,5 +48,37 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'last_login_at' => 'datetime',
+        'is_active' => 'boolean',
     ];
+
+    // Relationship với Customer
+    public function customer()
+    {
+        return $this->hasOne(Customers::class, 'user_id');
+    }
+
+    // Relationship với Order (đơn hàng tạo bởi người dùng)
+    public function orders()
+    {
+        return $this->hasMany(Orders::class, 'created_by');
+    }
+
+    // Relationship với Invoice (hóa đơn tạo bởi người dùng)
+    public function invoices()
+    {
+        return $this->hasMany(Invoices::class, 'created_by');
+    }
+
+    // Helper method để kiểm tra quyền admin
+    public function isAdmin()
+    {
+        return in_array($this->role, ['admin', 'super_admin']);
+    }
+
+    // Helper method để kiểm tra quyền super admin
+    public function isSuperAdmin()
+    {
+        return $this->role === 'super_admin';
+    }
 }
