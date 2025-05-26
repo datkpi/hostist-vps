@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Web\HomepageController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\auth\AuthController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Web\AboutController;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\CashbackController;
