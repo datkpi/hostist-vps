@@ -78,7 +78,6 @@ Route::group([
         Route::get('/deposit/success/{code}', [WalletController::class, 'depositSuccess'])->name('deposit.success');
     });
 
-    // routes/web.php
 
     // Các routes liên quan đến giỏ hàng
     Route::prefix('cart')->group(function () {
