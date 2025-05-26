@@ -10,9 +10,6 @@
         <li class="nav-item {{ request()->routeIs('about.index') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('about.index') }}">About</a>
         </li>
-        <li class="nav-item {{ request()->routeIs('services.index') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('services.index') }}">Services</a>
-        </li>
         <li class="nav-item {{ request()->routeIs('pricing.index') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('pricing.index') }}">Pricing</a>
         </li>

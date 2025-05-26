@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Categories;
 use App\Repositories\ProductsRepository;
 use App\Repositories\CategoriesRepository;
 
@@ -32,21 +33,18 @@ class HomepageController extends Controller
      */
     public function index()
     {
-        // Lấy các dịch vụ cho phần "Our Services"
-        $services = $this->productsRepository->getActive()
-            ->where('product_status', 'active')
-            ->sortByDesc('is_featured')
-            ->sortBy('sort_order')
-            ->take(6);
+        // Lấy các danh mục dịch vụ cho phần "Our Services"
+        $services = Categories::where('status', 'active')
+            ->orderBy('sort_order')
+            ->take(6)
+            ->get();
 
         // Lấy danh sách tất cả các danh mục
-        $categories = $this->categoriesRepository->getActive();
+        $categories = Categories::where('status', 'active')->get();
 
-        // Lấy một sản phẩm nổi bật từ mỗi danh mục
+        // Phần hosting solutions giữ nguyên
         $hostingSolutions = collect();
-
         foreach ($categories as $category) {
-            // Lấy sản phẩm nổi bật đầu tiên từ mỗi danh mục
             $product = $this->productsRepository->getByCategory($category->id, 1)
                 ->where('product_status', 'active')
                 ->sortByDesc('is_featured')
@@ -54,12 +52,10 @@ class HomepageController extends Controller
                 ->first();
 
             if ($product) {
-                // Gán danh mục vào sản phẩm
                 $product->categoryObject = $category;
                 $hostingSolutions->push($product);
             }
 
-            // Chỉ lấy tối đa 6 sản phẩm
             if ($hostingSolutions->count() >= 6) {
                 break;
             }
@@ -73,6 +69,7 @@ class HomepageController extends Controller
 
         return view('source.web.homepage.homepage', $compacts);
     }
+
 
     /**
      * Hiển thị chi tiết sản phẩm/dịch vụ
@@ -110,24 +107,24 @@ class HomepageController extends Controller
         return view('source.web.homepage.detail', $compacts);
     }
     public function category($categorySlug)
-{
-    // Tìm danh mục theo slug
-    $category = $this->categoriesRepository->findBySlug($categorySlug);
+    {
+        // Tìm danh mục theo slug
+        $category = $this->categoriesRepository->findBySlug($categorySlug);
 
-    if (!$category || $category->status != 'active') {
-        return abort(404);
+        if (!$category || $category->status != 'active') {
+            return abort(404);
+        }
+
+        // Lấy tất cả sản phẩm trong danh mục
+        $products = $this->productsRepository->getByCategory($category->id)
+            ->where('product_status', 'active')
+            ->sortBy('sort_order');
+
+        $compacts = [
+            'category' => $category,
+            'products' => $products
+        ];
+
+        return view('source.web.category.category', $compacts);
     }
-
-    // Lấy tất cả sản phẩm trong danh mục
-    $products = $this->productsRepository->getByCategory($category->id)
-        ->where('product_status', 'active')
-        ->sortBy('sort_order');
-
-    $compacts = [
-        'category' => $category,
-        'products' => $products
-    ];
-
-    return view('source.web.category.category', $compacts);
-}
 }

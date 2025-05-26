@@ -11,53 +11,38 @@
         </div>
         <div class="container">
             <div class="row">
-                @forelse($services as $service)
+                @forelse($services as $category)
                     <div class="col-md-6 col-lg-4">
                         <div class="box">
                             <div class="img-box">
-
                             </div>
                             <div class="detail-box">
-                                <h4>
-                                    {{ $service->name }}
-                                </h4>
+                                <h4>{{ $category->name }}</h4>
                                 <p>
-                                    @if ($service->short_description)
-                                        {{ $service->short_description }}
+                                    @if ($category->description)
+                                        {!! Str::limit(strip_tags($category->description), 150) !!}
                                     @else
-                                        {!! Str::limit(strip_tags($service->description), 150) !!}
+                                        Dịch vụ {{ $category->name }}
                                     @endif
                                 </p>
-                                <a href="{{ route('service.detail', $service->slug) }}">
-                                    Read More
+                                <a href="{{route('pricing.index')}}">
+                                    Xem thêm
                                     <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
                 @empty
-                    <!-- Hiển thị dữ liệu mẫu nếu không có dịch vụ nào -->
                     <div class="col-md-6 col-lg-4">
                         <div class="box">
-                            <div class="img-box">
-
-                            </div>
+                            <div class="img-box"></div>
                             <div class="detail-box">
-                                <h4>
-                                    SSL Certificates
-                                </h4>
-                                <p>
-                                    SSL certificates are digital credentials that authenticate website identity and enable
-                                    encrypted connections between web servers and browsers
-                                </p>
-                                <a href="#">
-                                    Read More
-                                    <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                                </a>
+                                <h4>Web Hosting</h4>
+                                <p>Dịch vụ web hosting chuyên nghiệp</p>
+                                <a href="#">Xem thêm <i class="fa fa-long-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
-                    <!-- Thêm các dịch vụ mẫu khác từ template gốc -->
                 @endforelse
             </div>
         </div>

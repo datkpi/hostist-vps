@@ -7,7 +7,7 @@
             <div class="col-md-5">
                 <div class="login-form">
                     <div class="login-logo">
-                        <h2 class="text-primary">Admin Login</h2>
+                        <h2 class="text-primary">Login</h2>
                     </div>
 
                     @if($errors->any())

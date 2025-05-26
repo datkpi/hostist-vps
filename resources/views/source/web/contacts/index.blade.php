@@ -1,4 +1,4 @@
-@extends('layouts.web.index')
+@extends('layouts.web.default')
 
 @section('content')
     <section class="contact_section layout_padding">
