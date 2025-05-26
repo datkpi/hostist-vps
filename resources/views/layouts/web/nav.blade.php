@@ -63,7 +63,7 @@
         @endguest
         <li class="nav-item">
             <a class="nav-link" href="{{ route('cart.index') }}">
-                <i class="fa fa-shopping-cart"></i> Giỏ hàng
+                <i class="fa fa-shopping-cart"></i> Cart
                 @php
                     $cartItems = session('cart', []);
                     $cartCount = count($cartItems);
