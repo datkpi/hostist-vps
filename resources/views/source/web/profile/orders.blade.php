@@ -136,7 +136,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="btn-group btn-group-sm">
-                                                        @if ($order->status == 'completed' && $order->total_amount >= 9000000)
+                                                        {{-- @if ($order->status == 'completed' && $order->total_amount >= 9000000)
                                                             @php
                                                                 $cashback = App\Models\Cashbacks::where(
                                                                     'order_id',
@@ -164,11 +164,12 @@
                                                                 </a>
                                                             @endif
                                                         @else
-                                                            <!-- Hiển thị các nút mặc định cho đơn hàng không đủ điều kiện -->
-                                                            <a href="{{ route('homepage') }}" class="btn btn-info">
-                                                                <i class="fa fa-eye"></i> Tiếp tục mua hàng
-                                                            </a>
+
                                                         @endif
+                                                                                                                    <!-- Hiển thị các nút mặc định cho đơn hàng không đủ điều kiện --> --}}
+                                                        <a href="{{ route('homepage') }}" class="btn btn-info">
+                                                            <i class="fa fa-eye"></i> Tiếp tục mua hàng
+                                                        </a>
                                                         <a href="{{ route('customer.order.detail', $order->id) }}"
                                                             class="btn btn-success">
                                                             <i class="fa fa-eye"></i> Xem chi tiết
