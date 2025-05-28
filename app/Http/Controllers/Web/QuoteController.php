@@ -580,103 +580,126 @@ class QuoteController extends Controller
     /**
      * Tạo template HTML cho PDF - phiên bản đẹp nhưng đơn giản
      */
-    private function createPdfTemplate($cart, $user, $config, $quoteNumber, $quoteDate, $expireDate, $total)
-    {
-        // Tạo danh sách sản phẩm
-        $productsHtml = '';
-        foreach ($cart->items as $item) {
-            $options = json_decode($item->options, true) ?: [];
-            $period = $options['period'] ?? 1;
-            $domain = $options['domain'] ?? 'N/A';
-            $productName = $item->product->name ?? 'Sản phẩm';
+ private function createPdfTemplate($cart, $user, $config, $quoteNumber, $quoteDate, $expireDate, $total)
+{
+    // Tạo danh sách sản phẩm
+    $productsHtml = '';
+    foreach ($cart->items as $item) {
+        $options = json_decode($item->options, true) ?: [];
+        $period = $options['period'] ?? 1;
+        $domain = $options['domain'] ?? 'N/A';
+        $productName = $item->product->name ?? 'Sản phẩm';
 
-            // Chi tiết sản phẩm dựa trên loại
-            $productDetails = '';
-            if ($item->product && $item->product->type == 'ssl') {
-                $productDetails = "
-                    <div style='font-size: 10px; color: #666; margin-top: 5px;'>
-                        • Certificate Type: {$productName}<br>
-                        • Domain: " . ($domain !== 'N/A' ? "*.$domain" : 'N/A') . "<br>
-                        • Verification: Domain Verification<br>
-                        • Period: {$period} year(s)
-                    </div>";
-            } elseif ($item->product && $item->product->type == 'hosting') {
-                $productDetails = "
-                    <div style='font-size: 10px; color: #666; margin-top: 5px;'>
-                        • Package: {$productName}<br>
-                        • Domain: {$domain}<br>
-                        • Period: {$period} year(s)
-                    </div>";
-            } elseif ($item->product && $item->product->type == 'domain') {
-                $productDetails = "
-                    <div style='font-size: 10px; color: #666; margin-top: 5px;'>
-                        • Domain: {$domain}<br>
-                        • Registration Period: {$period} year(s)
-                    </div>";
-            }
-
-            $productsHtml .= "
-            <tr>
-                <td style='padding: 12px 8px; border-bottom: 1px solid #ddd; vertical-align: top;'>
-                    <strong>{$productName}</strong>
-                    {$productDetails}
-                </td>
-                <td style='padding: 12px 8px; border-bottom: 1px solid #ddd; text-align: center;'>{$item->quantity}</td>
-                <td style='padding: 12px 8px; border-bottom: 1px solid #ddd; text-align: right;'>" . number_format($item->subtotal, 0, ',', '.') . " VNĐ</td>
-            </tr>";
-        }
-
-        // Technical specifications
-        $techSpecs = '';
-        if (isset($cart->items[0]->product)) {
-            $productType = $cart->items[0]->product->type;
-            $productName = $cart->items[0]->product->name ?? '';
-
-            if ($productType == 'ssl') {
-                $isWildcard = strpos(strtolower($productName), 'wildcard') !== false;
-                $isAlpha = strpos(strtolower($productName), 'alpha') !== false;
-
-                $techSpecs = "
+        // Chi tiết sản phẩm dựa trên loại
+        $productDetails = '';
+        if ($item->product && $item->product->type == 'ssl') {
+            $productDetails = "
+                <div style='font-size: 10px; color: #666; margin-top: 5px;'>
                     • Certificate Type: {$productName}<br>
-                    • Website domain verification<br>
-                    • Key length from 2048 bit<br>
-                    • Security: 128-256 bit encryption<br>
-                    " . ($isWildcard ? "• Wildcard support<br>" : "") . "
-                    • Site Seal: " . ($isAlpha ? 'Alpha Seal' : 'Secure Seal') . "<br>
-                    • Unlimited reissues<br>
-                    " . ($isWildcard ? "• Unlimited subdomains<br>" : "") . "
-                    • 99.999% browser compatibility<br>
-                    • $10,000 USD warranty coverage";
-            } elseif ($productType == 'hosting') {
-                $techSpecs = "
-                    • Operating System: Linux<br>
-                    • Control Panel: cPanel<br>
-                    • PHP 5.6 - 8.2<br>
-                    • MySQL 5.7+<br>
-                    • Free Let's Encrypt SSL<br>
-                    • Daily Backup<br>
-                    • Anti-DDoS Protection<br>
-                    • 99.9% Uptime Guarantee<br>
-                    • 24/7 Technical Support";
-            } elseif ($productType == 'domain') {
-                $techSpecs = "
-                    • Full DNS management<br>
-                    • Domain theft protection<br>
-                    • Email forwarding<br>
-                    • URL forwarding<br>
-                    • Custom nameservers<br>
-                    • Transfer lock protection<br>
-                    • Auto-renewal available";
-            } else {
-                $techSpecs = "
-                    • 24/7 technical support<br>
-                    • Manufacturer warranty<br>
-                    • Latest version updates<br>
-                    • Complete documentation";
-            }
+                    • Domain: " . ($domain !== 'N/A' ? "*.$domain" : 'N/A') . "<br>
+                    • Verification: Domain Verification<br>
+                    • Period: {$period} year(s)
+                </div>";
+        } elseif ($item->product && $item->product->type == 'hosting') {
+            $productDetails = "
+                <div style='font-size: 10px; color: #666; margin-top: 5px;'>
+                    • Package: {$productName}<br>
+                    • Domain: {$domain}<br>
+                    • Period: {$period} year(s)
+                </div>";
+        } elseif ($item->product && $item->product->type == 'domain') {
+            $productDetails = "
+                <div style='font-size: 10px; color: #666; margin-top: 5px;'>
+                    • Domain: {$domain}<br>
+                    • Registration Period: {$period} year(s)
+                </div>";
         }
 
-        return "
+        $productsHtml .= "
+        <tr>
+            <td style='padding: 12px 8px; border-bottom: 1px solid #ddd; vertical-align: top;'>
+                <strong>{$productName}</strong>
+                {$productDetails}
+            </td>
+            <td style='padding: 12px 8px; border-bottom: 1px solid #ddd; text-align: center;'>{$item->quantity}</td>
+            <td style='padding: 12px 8px; border-bottom: 1px solid #ddd; text-align: right;'>" . number_format($item->subtotal, 0, ',', '.') . " VNĐ</td>
+        </tr>";
+    }
+
+    // Technical specifications
+    $techSpecs = '';
+    if (isset($cart->items[0]->product)) {
+        $productType = $cart->items[0]->product->type;
+        $productName = $cart->items[0]->product->name ?? '';
+
+        if ($productType == 'ssl') {
+            $isWildcard = strpos(strtolower($productName), 'wildcard') !== false;
+            $isAlpha = strpos(strtolower($productName), 'alpha') !== false;
+
+            $techSpecs = "
+                • Certificate Type: {$productName}<br>
+                • Website domain verification<br>
+                • Key length from 2048 bit<br>
+                • Security: 128-256 bit encryption<br>
+                " . ($isWildcard ? "• Wildcard support<br>" : "") . "
+                • Site Seal: " . ($isAlpha ? 'Alpha Seal' : 'Secure Seal') . "<br>
+                • Unlimited reissues<br>
+                " . ($isWildcard ? "• Unlimited subdomains<br>" : "") . "
+                • 99.999% browser compatibility<br>
+                • $10,000 USD warranty coverage";
+        } elseif ($productType == 'hosting') {
+            $techSpecs = "
+                • Operating System: Linux<br>
+                • Control Panel: cPanel<br>
+                • PHP 5.6 - 8.2<br>
+                • MySQL 5.7+<br>
+                • Free Let's Encrypt SSL<br>
+                • Daily Backup<br>
+                • Anti-DDoS Protection<br>
+                • 99.9% Uptime Guarantee<br>
+                • 24/7 Technical Support";
+        } elseif ($productType == 'domain') {
+            $techSpecs = "
+                • Full DNS management<br>
+                • Domain theft protection<br>
+                • Email forwarding<br>
+                • URL forwarding<br>
+                • Custom nameservers<br>
+                • Transfer lock protection<br>
+                • Auto-renewal available";
+        } else {
+            $techSpecs = "
+                • 24/7 technical support<br>
+                • Manufacturer warranty<br>
+                • Latest version updates<br>
+                • Complete documentation";
+        }
+    }
+dd($config->company_bank_qr_code);
+    // Tạo phần QR code
+    $qrCodeHtml = '';
+    if (!empty($config->company_bank_qr_code)) {
+        $qrCodeHtml = "
+            <img src='" . asset('storage/' . $config->company_bank_qr_code) . "' 
+                 alt='Payment QR Code' 
+                 style='width: 150px; height: 150px; border: 2px solid #e9ecef; border-radius: 4px; margin: 0 auto 10px; display: block; object-fit: cover;'>
+            
+            <div style='width: 150px; height: 150px; background: white; border: 2px solid #e9ecef; border-radius: 4px; display: none; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 10px; color: #6c757d; text-align: center; line-height: 1.3; flex-direction: column;'>
+                <div style='font-weight: bold; margin-bottom: 8px;'>QR Code Error</div>
+                <div>Please use bank details above</div>
+            </div>";
+    } else {
+        $qrCodeHtml = "
+            <div style='width: 150px; height: 150px; background: white; border: 2px solid #e9ecef; border-radius: 4px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 10px; color: #6c757d; text-align: center; line-height: 1.3; flex-direction: column;'>
+                <div style='font-weight: bold; margin-bottom: 8px;'>QR Code</div>
+                <div>Bank: " . ($config->bank_name ?? 'Ngân hàng đầu tư và phát triển BIDV') . "</div>
+                <div>Account: " . ($config->company_bank_account_number ?? '218906666') . "</div>
+                <div style='margin-top: 5px; color: #dc3545; font-weight: bold;'>" . number_format($total, 0, ',', '.') . " VNĐ</div>
+                <div style='margin-top: 5px; font-size: 9px;'>Ref: " . str_replace('QUOTE-', 'PAY-', $quoteNumber) . "</div>
+            </div>";
+    }
+
+    return "
 <!DOCTYPE html>
 <html>
 <head>
@@ -779,11 +802,21 @@ class QuoteController extends Controller
             font-size: 11px;
             color: #666;
         }
+        @media (max-width: 768px) {
+            .payment-info-flex {
+                flex-direction: column !important;
+            }
+            
+            .qr-section {
+                flex: none !important;
+                margin-top: 20px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class='header'>
-        <div class='company-name'>" . ($config->company_name ?? 'HOSTIST COMPANY') . "</div>
+        <div class='company-name'>" . ($config->company_name ?? 'CÔNG TY TNHH TMDV XD VÀ VC NGUYỄN TUẤN') . "</div>
         <div class='quote-title'>QUOTE #{$quoteNumber}</div>
         <div class='quote-info'>
             Created: {$quoteDate} | Valid until: {$expireDate}
@@ -795,8 +828,8 @@ class QuoteController extends Controller
     <div class='info-grid'>
         <div class='info-left'>
             <h4 style='margin: 0 0 10px 0; color: #333;'>PROVIDER</h4>
-            <strong>" . ($config->company_name ?? 'Hostist Company') . "</strong><br>
-            " . ($config->company_address ?? '5335 Gate Pkwy, 2nd Floor, Jacksonville, FL 32256') . "<br>
+            <strong>" . ($config->company_name ?? 'CÔNG TY TNHH TMDV XD VÀ VC NGUYỄN TUẤN') . "</strong><br>
+            " . ($config->company_address ?? 'Địa chỉ: Số 140 Nguyễn Văn Khối, Phường 8, Quận Gò Vấp, Thành Phố Hồ Chí Minh, Việt Nam.') . "<br>
             Email: " . ($config->support_email ?? 'support@hostist.com') . "<br>
             Website: " . ($config->website ?? 'www.hostist.com') . "<br>
             Phone: " . ($config->support_phone ?? 'N/A') . "
@@ -834,33 +867,51 @@ class QuoteController extends Controller
 
     <div class='section-title'>PAYMENT INFORMATION</div>
 
-    <div class='payment-info'>
-        <table style='margin: 0;'>
-            <tr>
-                <td style='border: none; padding: 5px 0; width: 30%;'><strong>Amount:</strong></td>
-                <td style='border: none; padding: 5px 0;'>" . number_format($total, 0, ',', '.') . " VNĐ</td>
-            </tr>
-            <tr>
-                <td style='border: none; padding: 5px 0;'><strong>Bank:</strong></td>
-                <td style='border: none; padding: 5px 0;'>" . ($config->bank_name ?? 'ACB Bank') . "</td>
-            </tr>
-            <tr>
-                <td style='border: none; padding: 5px 0;'><strong>Account Number:</strong></td>
-                <td style='border: none; padding: 5px 0;'>" . ($config->company_bank_account_number ?? '218906666') . "</td>
-            </tr>
-            <tr>
-                <td style='border: none; padding: 5px 0;'><strong>Account Holder:</strong></td>
-                <td style='border: none; padding: 5px 0;'>" . ($config->company_name ?? 'Hostist Company') . "</td>
-            </tr>
-            <tr>
-                <td style='border: none; padding: 5px 0;'><strong>Payment Reference:</strong></td>
-                <td style='border: none; padding: 5px 0;'>" . str_replace('QUOTE-', 'PAY-', $quoteNumber) . "</td>
-            </tr>
-            <tr>
-                <td style='border: none; padding: 5px 0;'><strong>Payment Due:</strong></td>
-                <td style='border: none; padding: 5px 0;'>{$expireDate}</td>
-            </tr>
-        </table>
+    <div class='payment-info-flex' style='display: flex; gap: 20px; align-items: flex-start; background-color: #f8f9fa; padding: 15px; border: 1px solid #e9ecef; margin: 20px 0;'>
+        <div class='payment-details' style='flex: 1;'>
+            <table style='margin: 0;'>
+                <tr>
+                    <td style='border: none; padding: 8px 0; width: 35%; font-weight: bold; color: #495057;'>Amount:</td>
+                    <td style='border: none; padding: 8px 0; font-size: 16px; color: #dc3545; font-weight: bold;'>" . number_format($total, 0, ',', '.') . " VNĐ</td>
+                </tr>
+                <tr>
+                    <td style='border: none; padding: 8px 0; font-weight: bold; color: #495057;'>Bank:</td>
+                    <td style='border: none; padding: 8px 0;'>" . ($config->bank_name ?? 'ACB Bank') . "</td>
+                </tr>
+                <tr>
+                    <td style='border: none; padding: 8px 0; font-weight: bold; color: #495057;'>Account Number:</td>
+                    <td style='border: none; padding: 8px 0; font-weight: bold; color: #007bff;'>" . ($config->company_bank_account_number ?? '218906666') . "</td>
+                </tr>
+                <tr>
+                    <td style='border: none; padding: 8px 0; font-weight: bold; color: #495057;'>Account Holder:</td>
+                    <td style='border: none; padding: 8px 0;'>" . ($config->company_name ?? 'CÔNG TY TNHH TMDV XD VÀ VC NGUYỄN TUẤN') . "</td>
+                </tr>
+                <tr>
+                    <td style='border: none; padding: 8px 0; font-weight: bold; color: #495057;'>Payment Reference:</td>
+                    <td style='border: none; padding: 8px 0; font-weight: bold; color: #28a745;'>" . str_replace('QUOTE-', 'PAY-', $quoteNumber) . "</td>
+                </tr>
+                <tr>
+                    <td style='border: none; padding: 8px 0; font-weight: bold; color: #495057;'>Payment Due:</td>
+                    <td style='border: none; padding: 8px 0; color: #dc3545; font-weight: bold;'>{$expireDate}</td>
+                </tr>
+            </table>
+
+            <div style='background: #e3f2fd; padding: 12px; border-radius: 4px; margin: 15px 0; border-left: 4px solid #2196f3; font-size: 11px;'>
+                <strong>💡 Quick Payment:</strong> Scan the QR code to pay instantly via banking app or use the account details above for manual transfer.
+            </div>
+        </div>
+
+        <div class='qr-section' style='flex: 0 0 200px; text-align: center; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 2px dashed #dee2e6;'>
+            {$qrCodeHtml}
+            
+            <div style='font-size: 10px; color: #666; margin-top: 10px; line-height: 1.4;'>
+                <strong>📱 How to pay:</strong><br>
+                1. Open your banking app<br>
+                2. Scan this QR code<br>
+                3. Verify payment details<br>
+                4. Complete transaction
+            </div>
+        </div>
     </div>
 
     <div class='section-title'>TECHNICAL SPECIFICATIONS</div>
@@ -870,13 +921,13 @@ class QuoteController extends Controller
     </div>
 
     <div class='footer'>
-        <p style='margin: 5px 0;'><strong>Thank you for choosing " . ($config->company_name ?? 'Hostist Company') . "</strong></p>
+        <p style='margin: 5px 0;'><strong>Thank you for choosing " . ($config->company_name ?? 'CÔNG TY TNHH TMDV XD VÀ VC NGUYỄN TUẤN') . "</strong></p>
         <p style='margin: 5px 0;'>For questions or support, please contact us at " . ($config->support_email ?? 'support@hostist.com') . "</p>
         <p style='margin: 5px 0;'>This quote is valid until {$expireDate}</p>
     </div>
 </body>
 </html>";
-    }
+}
 
     /**
      * Lấy giỏ hàng hiện tại
