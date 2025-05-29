@@ -1,641 +1,536 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="vi">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title> Order confirmation </title>
-    <meta name="robots" content="noindex,nofollow" />
-    <meta name="viewport" content="width=device-width; initial-scale=1.0;" />
-    <style type="text/css">
-        @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
-
-        body {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Giá Dịch Vụ</title>
+    <style>
+        * {
             margin: 0;
             padding: 0;
-            background: #e1e1e1;
-        }
-
-        div,
-        p,
-        a,
-        li,
-        td {
-            -webkit-text-size-adjust: none;
-        }
-
-        .ReadMsgBody {
-            width: 100%;
-            background-color: #ffffff;
-        }
-
-        .ExternalClass {
-            width: 100%;
-            background-color: #ffffff;
+            box-sizing: border-box;
         }
 
         body {
+            font-family: 'DejaVu Sans', Arial, sans-serif;
+            font-size: 12px;
+            line-height: 1.4;
+            background: white;
+            color: #333;
+        }
+
+        .container {
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 40px;
+            background: linear-gradient(45deg, #ff6b35, #4dabf7, #69db7c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 8px;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+        .company-info {
+            font-size: 14px;
+            font-weight: bold;
+            color: #4dabf7;
+        }
+
+        .stamp {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 120px;
+            border: 3px solid #e74c3c;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            color: #e74c3c;
+            font-weight: bold;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .quote-title {
+            position: absolute;
+            top: 0;
+            right: 0;
+            text-align: right;
+        }
+
+        .quote-title h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .quote-date {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .company-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 40px 0 20px 0;
+        }
+
+        .company-box {
+            border: 1px solid #ddd;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .company-box h3 {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: #e9ecef;
+            padding: 5px;
+            text-align: center;
+            border-radius: 2px;
+        }
+
+        .company-details-content {
+            font-size: 10px;
+            line-height: 1.6;
+        }
+
+        .quotation-content {
+            margin-top: 20px;
+        }
+
+        .section-title {
+            background: #6c757d;
+            color: white;
+            padding: 8px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-bottom: 10px;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+        .quotation-table {
             width: 100%;
-            height: 100%;
-            background-color: #e1e1e1;
+            border-collapse: collapse;
+            font-size: 10px;
+            margin-bottom: 20px;
+        }
+
+        .quotation-table th,
+        .quotation-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            vertical-align: top;
+        }
+
+        .quotation-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+            font-size: 9px;
+        }
+
+        .quotation-table td:first-child {
+            text-align: left;
+        }
+
+        .item-details {
+            text-align: left;
+            font-size: 9px;
+            line-height: 1.5;
+        }
+
+        .price-column {
+            text-align: right;
+            font-weight: bold;
+        }
+
+        .total-section {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+        }
+
+        .total-row {
+            background: #e9ecef;
+        }
+
+        .tech-specs {
+            background-color: #fff;
+            padding: 15px;
+            border: 1px solid #e9ecef;
+            margin: 20px 0;
+            font-size: 11px;
+            line-height: 1.6;
+            border-radius: 4px;
+        }
+
+        .payment-info {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border: 1px solid #e9ecef;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .payment-details {
+            flex: 1;
+        }
+
+        .payment-details table {
             margin: 0;
-            padding: 0;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        html {
             width: 100%;
         }
 
-        p {
-            padding: 0 !important;
-            margin-top: 0 !important;
-            margin-right: 0 !important;
-            margin-bottom: 0 !important;
-            margin-left: 0 !important;
+        .payment-details td {
+            border: none;
+            padding: 8px 0;
         }
 
-        .visibleMobile {
-            display: none;
+        .payment-details .amount {
+            font-size: 16px;
+            color: #dc3545;
+            font-weight: bold;
         }
 
-        .hiddenMobile {
-            display: block;
+        .payment-details .reference {
+            font-weight: bold;
+            color: #28a745;
         }
 
-        @media only screen and (max-width: 600px) {
+        .qr-section {
+            flex: 0 0 200px;
+            text-align: center;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px dashed #dee2e6;
+        }
+
+        .qr-code {
+            width: 150px;
+            height: 150px;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 10px;
+            color: #6c757d;
+            text-align: center;
+            line-height: 1.3;
+            flex-direction: column;
+        }
+
+        .qr-instructions {
+            font-size: 10px;
+            color: #666;
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+
+        .payment-highlight {
+            background: #e3f2fd;
+            padding: 12px;
+            border-radius: 4px;
+            margin: 15px 0;
+            border-left: 4px solid #2196f3;
+            font-size: 11px;
+        }
+
+        .footer-note {
+            font-size: 9px;
+            color: #666;
+            margin-top: 10px;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            text-align: center;
+            font-size: 11px;
+            color: #666;
+        }
+
+        @media print {
+            .container {
+                max-width: none;
+                padding: 10px;
+            }
+            
             body {
-                width: auto !important;
-            }
-
-            table[class=fullTable] {
-                width: 96% !important;
-                clear: both;
-            }
-
-            table[class=fullPadding] {
-                width: 85% !important;
-                clear: both;
-            }
-
-            table[class=col] {
-                width: 45% !important;
-            }
-
-            .erase {
-                display: none;
+                font-size: 10px;
             }
         }
 
-        @media only screen and (max-width: 420px) {
-            table[class=fullTable] {
-                width: 100% !important;
-                clear: both;
+        @media (max-width: 768px) {
+            .payment-info {
+                flex-direction: column !important;
             }
-
-            table[class=fullPadding] {
-                width: 85% !important;
-                clear: both;
+            
+            .qr-section {
+                flex: none !important;
+                margin-top: 20px;
             }
-
-            table[class=col] {
-                width: 100% !important;
-                clear: both;
-            }
-
-            table[class=col] td {
-                text-align: left !important;
-            }
-
-            .erase {
-                display: none;
-                font-size: 0;
-                max-height: 0;
-                line-height: 0;
-                padding: 0;
-            }
-
-            .visibleMobile {
-                display: block !important;
-            }
-
-            .hiddenMobile {
-                display: none !important;
+            
+            .company-details {
+                grid-template-columns: 1fr;
             }
         }
     </style>
-
 </head>
-
 <body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-section">
+                <div class="logo">LOGO</div>
+                <div>
+                    <div class="company-info">CÔNG TY CỦA BỌN TÔI</div>
+                    <div style="font-size: 10px; color: #666;">Technology Solutions</div>
+                </div>
+            </div>
+            
+            <div class="stamp">
+                <div>MST: 0123456789</div>
+                <div style="margin: 5px 0;">★★★</div>
+                <div>CÔNG TY TNHH</div>
+                <div>CÔNG NGHỆ VÀ DỊCH VỤ</div>
+                <div>VIỆT NAM</div>
+            </div>
 
-    <!-- Header -->
-    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable"
-        bgcolor="#e1e1e1">
-        <tr>
-            <td height="20"></td>
-        </tr>
-        <tr>
-            <td>
-                <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable"
-                    bgcolor="#ffffff" style="border-radius: 10px 10px 0 0;">
-                    <tr class="hiddenMobile">
-                        <td height="40"></td>
-                    </tr>
-                    <tr class="visibleMobile">
-                        <td height="30"></td>
-                    </tr>
+            <div class="quote-title">
+                <h1>BÁO GIÁ</h1>
+                <div class="quote-date">
+                    NGÀY TẠO: 29/05/2025<br>
+                    HIỆU LỰC: 30 ngày
+                </div>
+            </div>
+        </div>
 
+        <div class="company-details">
+            <div class="company-box">
+                <h3>BÊN CUNG CẤP DỊCH VỤ</h3>
+                <div class="company-details-content">
+                    <strong>CÔNG TY TNHH TMDV XD VÀ VC NGUYỄN TUẤN</strong><br>
+                    Đại diện: Nguyễn Văn A (Mr.)<br>
+                    Địa chỉ: Số 140 Nguyễn Văn Khối, Phường 8, Quận Gò Vấp, TP HCM<br>
+                    Điện thoại: 0123456789<br>
+                    Fax: 028.3xxx.xxxx<br>
+                    Email: support@company.com<br>
+                    Website: www.company.com
+                </div>
+            </div>
+
+            <div class="company-box">
+                <h3>KHÁCH HÀNG</h3>
+                <div class="company-details-content">
+                    <strong>CÔNG TY ABC</strong><br><br>
+                    Địa chỉ: 123 Đường ABC, Quận XYZ, TP HCM<br>
+                    Điện thoại: 0987654321<br>
+                    Fax: 028.3xxx.xxxx<br>
+                    Email: contact@abc.com<br>
+                    Website: www.abc.com
+                </div>
+            </div>
+        </div>
+
+        <div class="quotation-content">
+            <div class="section-title">
+                NỘI DUNG: BÁO GIÁ DỊCH VỤ HOSTING VÀ CHỨNG THƯ SỐ SSL
+            </div>
+
+            <table class="quotation-table">
+                <thead>
                     <tr>
-                        <td>
-                            <table width="480" border="0" cellpadding="0" cellspacing="0" align="center"
-                                class="fullPadding">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <table width="220" border="0" cellpadding="0" cellspacing="0"
-                                                align="left" class="col">
-                                                <tbody>
-                                                    <tr>
-                                                        <td align="left"> <img
-                                                                src="http://www.supah.it/dribbble/017/logo.png"
-                                                                width="32" height="32" alt="logo"
-                                                                border="0" /></td>
-                                                    </tr>
-                                                    <tr class="hiddenMobile">
-                                                        <td height="40"></td>
-                                                    </tr>
-                                                    <tr class="visibleMobile">
-                                                        <td height="20"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td
-                                                            style="font-size: 12px; color: #5b5b5b; font-family: 'Open Sans', sans-serif; line-height: 18px; vertical-align: top; text-align: left;">
-                                                            Hello, {{ $user->name ?? 'Customer' }}.
-                                                            <br> Thank you for shopping from our store and for your
-                                                            order.
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <table width="220" border="0" cellpadding="0" cellspacing="0"
-                                                align="right" class="col">
-                                                <tbody>
-                                                    <tr class="visibleMobile">
-                                                        <td height="20"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td height="5"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td
-                                                            style="font-size: 21px; color: #ff0000; letter-spacing: -1px; font-family: 'Open Sans', sans-serif; line-height: 1; vertical-align: top; text-align: right;">
-                                                            Invoice
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                    <tr class="hiddenMobile">
-                                                        <td height="50"></td>
-                                                    </tr>
-                                                    <tr class="visibleMobile">
-                                                        <td height="20"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td
-                                                            style="font-size: 12px; color: #5b5b5b; font-family: 'Open Sans', sans-serif; line-height: 18px; vertical-align: top; text-align: right;">
-                                                            <small>ORDER</small> #800000025<br />
-                                                            <small>CREATED DATE: {{ $quoteDate ?? '20/05/2025' }}<br />
-                                                                VALID FOR: {{ $validity ?? '30 days' }}</small>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
+                        <th style="width: 60%;">SẢN PHẨM / DỊCH VỤ</th>
+                        <th style="width: 15%; text-align: center;">SỐ LƯỢNG</th>
+                        <th style="width: 25%; text-align: right;">THÀNH TIỀN (VNĐ)</th>
                     </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-    <!-- /Header -->
-    <!-- Tiêu đề nội dung -->
-    <table width="100%" border="1" cellpadding="5" cellspacing="0" bordercolor="#dddddd"
-        style="margin-top: 10px;">
-        <tr>
-            <td align="center" class="bg-gray bold">
-                CONTENTS: QUOTATION FOR {{ strtoupper($cart->items[0]->product->type ?? 'SSL') }} PACKAGE FOR WEBSITE
-            </td>
-        </tr>
-    </table>
-    <!-- Order Details -->
-    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable"
-        bgcolor="#e1e1e1">
-        <tbody>
-            <tr>
-                <td>
-                    <table width="600" border="0" cellpadding="0" cellspacing="0" align="center"
-                        class="fullTable" bgcolor="#ffffff">
-                        <tbody>
-                            <tr>
-                            <tr class="hiddenMobile">
-                                <td height="60"></td>
-                            </tr>
-                            <tr class="visibleMobile">
-                                <td height="40"></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <table width="480" border="0" cellpadding="0" cellspacing="0" align="center"
-                                        class="fullPadding">
-                                        <tbody>
-                                            <tr>
-                                                <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 10px 7px 0;"
-                                                    width="52%" align="left">
-                                                    ITEM/DESCRIPTION
-                                                </th>
-                                                <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;"
-                                                    align="left">
-                                                    <small>SERVER</small>
-                                                </th>
-                                                <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;"
-                                                    align="center">
-                                                    Quantity
-                                                </th>
-                                                <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #1e2b33; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;"
-                                                    align="right">
-                                                    Subtotal
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <td height="1" style="background: #bebebe;" colspan="4"></td>
-                                            </tr>
-                                            <tr>
-                                                <td height="10" colspan="4"></td>
-                                            </tr>
-                                            @foreach ($cart->items as $index => $item)
-                                                @php
-                                                    $options = json_decode($item->options, true) ?: [];
-                                                    $period = $options['period'] ?? 1;
-                                                    $domain = $options['domain'] ?? null;
-                                                    $server = isset($options['server'])
-                                                        ? $options['server']
-                                                        : 'Không giới hạn';
-                                                    $keypair = isset($options['keypair'])
-                                                        ? $options['keypair']
-                                                        : 'Không giới hạn';
-                                                @endphp
-                                                <tr>
-                                                    <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #ff0000;  line-height: 18px;  vertical-align: top; padding:10px 0;"
-                                                        class="article">
-                                                        Providing international public digital certificate
-                                                        {{ $item->product->name ?? 'SSL' }} for website domain.<br /> -
-                                                        Package: 01
-                                                        {{ $item->product->name ?? 'SSL Certificate' }}<br /> - Domain
-                                                        in use:
-                                                        {{ $domain ? '*.' . $domain : 'N/A' }}<br /> - Verification
-                                                        level: Domain verification<br /><br />
-                                                        Included:<br /> - Direct certificate management account access
-                                                        (https://gcc.globalsign.com)<br /> -
-                                                        Unlimited server installations<br /> - Unlimited keypairs for
-                                                        server use<br /> - Support and
-                                                        troubleshooting within 24 hours<br /> - Valid products/services
-                                                        with genuine origin, receiving
-                                                        technical support and after-sales warranty service according to
-                                                        supplier standards.
-                                                    </td>
-                                                    <td
-                                                        style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;">
-                                                        <small>{{ $server }}</small></td>
-                                                    <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;"
-                                                        align="center">{{ $item->quantity }}</td>
-                                                    <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #1e2b33;  line-height: 18px;  vertical-align: top; padding:10px 0;"
-                                                        align="right">
-                                                        {{ number_format($item->subtotal, 0, ',', '.') }}/đ/year</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td height="1" colspan="4"
-                                                        style="border-bottom:1px solid #e4e4e4"></td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td height="20"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <!-- /Order Details -->
-    <!-- Total -->
-    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable"
-        bgcolor="#e1e1e1">
-        <tbody>
-            <tr>
-                <td>
-                    <table width="600" border="0" cellpadding="0" cellspacing="0" align="center"
-                        class="fullTable" bgcolor="#ffffff">
-                        <tbody>
-                            <tr>
-                                <td>
-
-                                    <!-- Table Total -->
-                                    <table width="480" border="0" cellpadding="0" cellspacing="0"
-                                        align="center" class="fullPadding">
-                                        <tbody>
-                                            <tr>
-                                                <td
-                                                    style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
-                                                    Subtotal
-                                                </td>
-                                                <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; white-space:nowrap;"
-                                                    width="80">
-                                                    {{ number_format($total, 0, ',', '.') }} đ
-                                                </td>
-                                            </tr>
-                                            @if (isset($discount) && $discount > 0)
-                                                <tr>
-                                                    <td
-                                                        style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
-                                                        Giảm giá
-                                                    </td>
-                                                    <td
-                                                        style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
-                                                        {{ number_format($discount, 0, ',', '.') }} đ
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td
-                                                        style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
-                                                        <strong>Total after discount</strong>
-                                                    </td>
-                                                    <td
-                                                        style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
-                                                        <strong>{{ number_format($total - $discount, 0, ',', '.') }}
-                                                            đ</strong>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td
-                                                        style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #b0b0b0; line-height: 22px; vertical-align: top; text-align:right; ">
-                                                        <small>TAX</small></td>
-                                                    <td
-                                                        style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #b0b0b0; line-height: 22px; vertical-align: top; text-align:right; ">
-                                                        <small>{{ number_format($discount, 0, ',', '.') }}</small>
-                                                    </td>
-                                                </tr>
-                                            @endif
-                                        </tbody>
-                                    </table>
-                                    <!-- /Table Total -->
-
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <!-- /Total -->
-    <!-- Information -->
-    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable"
-        bgcolor="#e1e1e1">
-        <tbody>
-            <tr>
-                <td>
-                    <table width="600" border="0" cellpadding="0" cellspacing="0" align="center"
-                        class="fullTable" bgcolor="#ffffff">
-                        <tbody>
-                            <tr>
-                            <tr class="hiddenMobile">
-                                <td height="60"></td>
-                            </tr>
-                            <tr class="visibleMobile">
-                                <td height="40"></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <table width="480" border="0" cellpadding="0" cellspacing="0"
-                                        align="center" class="fullPadding">
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <table width="220" border="0" cellpadding="0"
-                                                        cellspacing="0" align="left" class="col">
-
-                                                        <tbody>
-                                                            <tr>
-                                                                <td class="bg-gray bold">PROVIDER</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    {{ $config->company_name ?? 'Hostist company' }}<br />
-                                                                    {{ $config->company_address ?? '5335 Gate Pkwy, 2nd Floor, Jacksonville, FL 32256' }}<br />
-                                                                    Email:
-                                                                    {{ $config->support_email ?? 'supporthostit@gmail.com' }}<br />
-                                                                    URL: {{ $config->website ?? 'www.hostist.com' }}
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-
-
-                                                    <table width="220" border="0" cellpadding="0"
-                                                        cellspacing="0" align="right" class="col">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td class="bg-gray bold">CLIENT</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    {{ $user->name ?? 'Customer' }}<br />
-                                                                    Address:
-                                                                    {{ $user->address ?? 'Address not provided' }}<br />
-                                                                    Phone: {{ $user->phone ?? 'N/A' }}<br />
-                                                                    Email: {{ $user->email ?? '' }}<br />
-                                                                    @if (isset($user->customer) && isset($user->customer->website))
-                                                                        URL: {{ $user->customer->website }}
-                                                                    @endif
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <table width="480" border="0" cellpadding="0" cellspacing="0"
-                                        align="center" class="fullPadding">
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <table width="220" border="0" cellpadding="0"
-                                                        cellspacing="0" align="left" class="col">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <p><b>Payment Information</b></p>
-                                                                    <p><b>Amount:</b>
-                                                                        {{ number_format($total, 0, ',', '.') }} đ</p>
-                                                                    <p><b>Bank:</b> {{ $config->bank_name ?? 'ACB' }}
-                                                                    </p>
-                                                                    <p><b>Account Number:</b>
-                                                                        {{ $config->company_bank_account_number ?? '218906666' }}
-                                                                    </p>
-                                                                    <p><b>Account Holder:</b>
-                                                                        {{ $config->company_name ?? 'Hostist company' }}
-                                                                    </p>
-                                                                    <p><b>Reference:</b>
-                                                                        {{ str_replace('QUOTE-', 'INV', $quoteNumber) }}
-                                                                    </p>
-                                                                    <p><b>Expiration Date:</b> {{ $expireDate }}</p>
-
-                                                                    <div align="center" style="margin-top: 5px;">
-                                                                        <p>QR Code:</p>
-                                                                        @if (isset($qrCodePath) && file_exists($qrCodePath))
-                                                                            <img src="{{ $qrCodePath }}"
-                                                                                alt="QR Code"
-                                                                                style="width: 80px; height: 80px; border: 1px solid #ddd; padding: 3px; background-color: white;" />
-                                                                        @else
-                                                                            <div
-                                                                                style="width: 80px; height: 80px; border: 1px solid #ddd; padding: 3px; background-color: white; margin: 0 auto;">
-                                                                                QR Code</div>
-                                                                        @endif
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-
-
-                                                    <table width="220" border="0" cellpadding="0"
-                                                        cellspacing="0" align="right" class="col">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td><b>Standard Technical Specifications:</b></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <ul style="margin: 0; padding-left: 20px;">
-                                                                        @if (isset($cart->items[0]->product) && $cart->items[0]->product->type == 'ssl')
-                                                                            <li>Certificate Type:
-                                                                                {{ $cart->items[0]->product->name ?? 'SSL Certificate' }}
-                                                                            </li>
-                                                                            <li>Website domain verification</li>
-                                                                            <li>Key length from 2048 bit</li>
-                                                                            <li>Security standard from 128 bit to 256
-                                                                                bit - RSA & DSA Algorithm Support</li>
-                                                                            @if (strpos(strtolower($cart->items[0]->product->name ?? ''), 'wildcard') !== false)
-                                                                                <li>Wildcard extension support</li>
-                                                                            @endif
-                                                                            <li>Secure Site Seal:
-                                                                                {{ strpos(strtolower($cart->items[0]->product->name ?? ''), 'alpha') !== false ? 'Alpha Seal' : 'Secure Seal' }}
-                                                                            </li>
-                                                                            <li>Unlimited reissues and number of digital
-                                                                                certificates issued</li>
-                                                                            @if (strpos(strtolower($cart->items[0]->product->name ?? ''), 'wildcard') !== false)
-                                                                                <li>Unlimited first-level subdomains
-                                                                                    using digital certificate (*.*)</li>
-                                                                            @endif
-                                                                            <li>Compatible with 99.999% of browsers and
-                                                                                operating systems</li>
-                                                                            <li>Certificate warranty coverage of $10,000
-                                                                                USD</li>
-                                                                        @elseif (isset($cart->items[0]->product) && $cart->items[0]->product->type == 'hosting')
-                                                                            <li>Operating System: Linux</li>
-                                                                            <li>Control Panel: cPanel</li>
-                                                                            <li>PHP 5.6 - 8.2</li>
-                                                                            <li>MySQL 5.7+</li>
-                                                                            <li>Free Let's Encrypt SSL</li>
-                                                                            <li>Daily Backup</li>
-                                                                            <li>Anti-DDoS Protection</li>
-                                                                            <li>99.9% Uptime Guarantee</li>
-                                                                            <li>24/7 Technical Support</li>
-                                                                        @elseif (isset($cart->items[0]->product) && $cart->items[0]->product->type == 'domain')
-                                                                            <li>Full DNS management</li>
-                                                                            <li>Domain theft protection</li>
-                                                                            <li>Email forwarding</li>
-                                                                            <li>URL forwarding</li>
-                                                                            <li>Custom nameservers</li>
-                                                                            <li>Domain lock against unauthorized
-                                                                                transfers</li>
-                                                                            <li>Auto-renewal (optional)</li>
-                                                                        @else
-                                                                            <li>24/7 technical support</li>
-                                                                            <li>Warranty according to manufacturer
-                                                                                standards</li>
-                                                                            <li>Latest version updates</li>
-                                                                            <li>User documentation</li>
-                                                                        @endif
-                                                                    </ul>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr class="hiddenMobile">
-                                <td height="60"></td>
-                            </tr>
-                            <tr class="visibleMobile">
-                                <td height="30"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <!-- /Information -->
-    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable"
-        bgcolor="#e1e1e1">
-
-        <tr>
-            <td>
-                <table width="600" border="0" cellpadding="0" cellspacing="0" align="center"
-                    class="fullTable" bgcolor="#ffffff" style="border-radius: 0 0 10px 10px;">
+                </thead>
+                <tbody>
                     <tr>
-                        <td>
-                            <table width="480" border="0" cellpadding="0" cellspacing="0" align="center"
-                                class="fullPadding">
-                                <tbody>
-                                    <tr>
-                                        <td
-                                            style="font-size: 12px; color: #5b5b5b; font-family: 'Open Sans', sans-serif; line-height: 18px; vertical-align: top; text-align: left;">
-                                            Have a nice day.
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <td class="item-details">
+                            <strong>Gói Hosting Business + SSL Certificate</strong><br>
+                            <div style="margin-top: 5px; color: #666; font-size: 9px;">
+                                • Gói: Business Hosting Package<br>
+                                • Tên miền: example.com<br>
+                                • Thời hạn: 1 năm<br>
+                                • SSL Certificate: Let's Encrypt (miễn phí)<br>
+                                • Disk space: 10GB SSD<br>
+                                • Bandwidth: Unlimited<br>
+                                • Email accounts: 50<br>
+                                • Database: 10 MySQL<br>
+                                • Control Panel: cPanel<br>
+                                • Backup hàng ngày: Có<br>
+                                • Hỗ trợ 24/7: Có
+                            </div>
                         </td>
+                        <td>1</td>
+                        <td class="price-column">2,400,000</td>
                     </tr>
-                    <tr class="spacer">
-                        <td height="50"></td>
+                    <tr>
+                        <td class="item-details">
+                            <strong>Dịch vụ thiết lập và cấu hình</strong><br>
+                            <div style="margin-top: 5px; color: #666; font-size: 9px;">
+                                • Cài đặt và cấu hình hosting<br>
+                                • Thiết lập SSL certificate<br>
+                                • Cấu hình email accounts<br>
+                                • Hỗ trợ migration dữ liệu<br>
+                                • Training sử dụng cPanel
+                            </div>
+                        </td>
+                        <td>1</td>
+                        <td class="price-column">500,000</td>
                     </tr>
+                    <tr class="total-section">
+                        <td colspan="2" style="text-align: right; font-weight: bold;">Tổng cộng</td>
+                        <td class="price-column">2,900,000</td>
+                    </tr>
+                    <tr class="total-section">
+                        <td colspan="2" style="text-align: right;">Giảm giá (10%)</td>
+                        <td class="price-column">290,000</td>
+                    </tr>
+                    <tr class="total-section">
+                        <td colspan="2" style="text-align: right; font-weight: bold;">Tổng sau giảm giá</td>
+                        <td class="price-column">2,610,000</td>
+                    </tr>
+                    <tr class="total-section">
+                        <td colspan="2" style="text-align: right;">Thuế VAT 10%</td>
+                        <td class="price-column">261,000</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="2" style="text-align: right; font-weight: bold; font-size: 11px;">TỔNG THANH TOÁN</td>
+                        <td class="price-column" style="font-weight: bold; font-size: 11px;">2,871,000</td>
+                    </tr>
+                </tbody>
+            </table>
 
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td height="20"></td>
-        </tr>
-    </table>
+            <div class="footer-note">
+                <strong>Bằng chữ: Hai triệu tám trăm bảy mười một nghìn đồng./.strong><br>
+                (Báo giá đã bao gồm thuế giá trị gia tăng và các khoản thuế, phí khác liên quan)
+            </div>
+
+            <div class="section-title">THÔNG TIN THANH TOÁN</div>
+
+            <div class="payment-info">
+                <div class="payment-details">
+                    <table>
+                        <tr>
+                            <td style="width: 35%; font-weight: bold; color: #495057;">Số tiền:</td>
+                            <td class="amount">2,871,000 VNĐ</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; color: #495057;">Ngân hàng:</td>
+                            <td>Ngân hàng ACB</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; color: #495057;">Số tài khoản:</td>
+                            <td style="font-weight: bold; color: #007bff;">218906666</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; color: #495057;">Chủ tài khoản:</td>
+                            <td>CÔNG TY TNHH TMDV XD VÀ VC NGUYỄN TUẤN</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; color: #495057;">Nội dung chuyển khoản:</td>
+                            <td class="reference">PAY-2025052901</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; color: #495057;">Hạn thanh toán:</td>
+                            <td style="color: #dc3545; font-weight: bold;">28/06/2025</td>
+                        </tr>
+                    </table>
+
+                    <div class="payment-highlight">
+                        <strong>💡 Thanh toán nhanh:</strong> Quét mã QR để thanh toán ngay qua ứng dụng ngân hàng hoặc sử dụng thông tin tài khoản bên trên.
+                    </div>
+                </div>
+
+                <div class="qr-section">
+                    <div class="qr-code">
+                        <div style="font-weight: bold; margin-bottom: 8px;">QR Code</div>
+                        <div>Ngân hàng: ACB</div>
+                        <div>TK: 218906666</div>
+                        <div style="margin-top: 5px; color: #dc3545; font-weight: bold;">2,871,000 VNĐ</div>
+                        <div style="margin-top: 5px; font-size: 9px;">Ref: PAY-2025052901</div>
+                    </div>
+                    
+                    <div class="qr-instructions">
+                        <strong>📱 Cách thanh toán:</strong><br>
+                        1. Mở ứng dụng ngân hàng<br>
+                        2. Quét mã QR này<br>
+                        3. Kiểm tra thông tin<br>
+                        4. Xác nhận thanh toán
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">THÔNG SỐ KỸ THUẬT</div>
+
+            <div class="tech-specs">
+                <strong>Hosting Business Package:</strong><br>
+                • Hệ điều hành: Linux CentOS<br>
+                • Control Panel: cPanel/WHM<br>
+                • PHP: 5.6 - 8.2 (lựa chọn)<br>
+                • MySQL: 5.7+ / MariaDB<br>
+                • Disk Space: 10GB SSD<br>
+                • Bandwidth: Unlimited<br>
+                • Email Accounts: 50<br>
+                • Database: 10 MySQL<br>
+                • SSL Certificate: Let's Encrypt (miễn phí)<br>
+                • Backup: Hàng ngày tự động<br>
+                • Uptime: 99.9% guarantee<br>
+                • Bảo mật: Anti-DDoS, Firewall<br>
+                • Hỗ trợ: 24/7 qua ticket/email/phone
+            </div>
+        </div>
+
+        <div class="footer">
+            <p style="margin: 5px 0;"><strong>Cảm ơn quý khách đã tin tưởng dịch vụ của chúng tôi!</strong></p>
+            <p style="margin: 5px 0;">Mọi thắc mắc xin liên hệ: support@company.com | 0123456789</p>
+            <p style="margin: 5px 0;">Báo giá này có hiệu lực đến ngày 28/06/2025</p>
+        </div>
+    </div>
 </body>
-
 </html>
