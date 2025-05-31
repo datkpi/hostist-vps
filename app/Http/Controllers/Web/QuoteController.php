@@ -597,7 +597,7 @@ class QuoteController extends Controller
             </table>
 
             <div class='footer-note'>
-                <strong>Bằng chữ: {$totalInWords}./.strong><br>
+                <strong>Bằng chữ: {$totalInWords} </strong><br>
                 (Báo giá đã bao gồm thuế giá trị gia tăng và các khoản thuế, phí khác liên quan)
             </div>
 
