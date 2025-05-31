@@ -131,7 +131,7 @@ class QuoteController extends Controller
         $subtotal = $cart->subtotal;
         $discount = $subtotal * 0; // Giảm giá 10%
         $afterDiscount = $subtotal - $discount;
-        $vat = $afterDiscount * 0.10; // VAT 10%
+        $vat = $afterDiscount * 0.08; // VAT 10%
         $total = $afterDiscount + $vat;
 
         // Tạo HTML với template mới
@@ -229,8 +229,8 @@ class QuoteController extends Controller
                 <td style='text-align: center; padding: 8px; border: 1px solid #ddd;'>{$period} năm</td>
                 <td style='text-align: center; padding: 8px; border: 1px solid #ddd;'>Không giới hạn</td>
                 <td style='text-align: center; padding: 8px; border: 1px solid #ddd;'>Không giới hạn</td>
-                <td style='text-align: right; font-weight: bold; padding: 8px; border: 1px solid #ddd;'>" . number_format($item->subtotal, 0, ',', '.') . " đ</td>
-                <td style='text-align: right; font-weight: bold; padding: 8px; border: 1px solid #ddd;'>" . number_format($item->subtotal, 0, ',', '.') . " đ</td>
+                <td style='text-align: right; font-weight: bold; padding: 8px; border: 1px solid #ddd;'>" . number_format($item->subtotal, 0, ',', '.') . " </td>
+                <td style='text-align: right; font-weight: bold; padding: 8px; border: 1px solid #ddd;'>" . number_format($item->subtotal, 0, ',', '.') . " </td>
             </tr>";
         }
 
@@ -575,23 +575,23 @@ class QuoteController extends Controller
                     {$productsHtml}
                     <tr class='total-section'>
                         <td colspan='7' style='text-align: right; font-weight: bold;'>Tổng cộng</td>
-                        <td class='price-column'>" . number_format($subtotal, 0, ',', '.') . " đ</td>
+                        <td class='price-column'>" . number_format($subtotal, 0, ',', '.') . " VNĐ</td>
                     </tr>
                     <tr class='total-section'>
                         <td colspan='7' style='text-align: right;'>Giảm giá (10%)</td>
-                        <td class='price-column'>" . number_format($discount, 0, ',', '.') . " đ</td>
+                        <td class='price-column'>" . number_format($discount, 0, ',', '.') . " VNĐ</td>
                     </tr>
                     <tr class='total-section'>
                         <td colspan='7' style='text-align: right; font-weight: bold;'>Tổng sau giảm giá</td>
-                        <td class='price-column'>" . number_format($afterDiscount, 0, ',', '.') . " đ</td>
+                        <td class='price-column'>" . number_format($afterDiscount, 0, ',', '.') . " VNĐ</td>
                     </tr>
                     <tr class='total-section'>
                         <td colspan='7' style='text-align: right;'>Thuế VAT 10%</td>
-                        <td class='price-column'>" . number_format($vat, 0, ',', '.') . " đ</td>
+                        <td class='price-column'>" . number_format($vat, 0, ',', '.') . " VNĐ</td>
                     </tr>
                     <tr class='total-row'>
                         <td colspan='7' style='text-align: right; font-weight: bold; font-size: 11px;'>TỔNG THANH TOÁN</td>
-                        <td class='price-column' style='font-weight: bold; font-size: 11px;'>" . number_format($total, 0, ',', '.') . " đ</td>
+                        <td class='price-column' style='font-weight: bold; font-size: 11px;'>" . number_format($total, 0, ',', '.') . " VNĐ</td>
                     </tr>
                 </tbody>
             </table>
