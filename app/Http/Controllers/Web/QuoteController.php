@@ -237,20 +237,30 @@ class QuoteController extends Controller
         // Tạo phần QR code
         $qrCodeHtml = '';
         if (!empty($config->company_bank_qr_code)) {
-            $qrCodeHtml = "
-            <img src='" . asset('storage/' . $config->company_bank_qr_code) . "' 
-                 alt='Payment QR Code' 
-                 style='width: 150px; height: 150px; border: 2px solid #e9ecef; border-radius: 4px; margin: 0 auto 10px; display: block; object-fit: cover;'>
-            ";
-        } else {
-            $qrCodeHtml = "
-            <div style='width: 150px; height: 150px; background: white; border: 2px solid #e9ecef; border-radius: 4px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 10px; color: #6c757d; text-align: center; line-height: 1.3; flex-direction: column;'>
-                <div style='font-weight: bold; margin-bottom: 8px;'>QR Code</div>
-                <div>Ngân hàng: " . ($config->bank_name ?? 'ACB') . "</div>
-                <div>TK: " . ($config->company_bank_account_number ?? '218906666') . "</div>
-                <div style='margin-top: 5px; color: #dc3545; font-weight: bold;'>" . number_format($total, 0, ',', '.') . " VNĐ</div>
-                <div style='margin-top: 5px; font-size: 9px;'>Ref: " . str_replace('QUOTE-', 'PAY-', $quoteNumber) . "</div>
-            </div>";
+            // Sử dụng đường dẫn tuyệt đối cho PDF
+            $qrCodePath = storage_path('app/public/' . $config->company_bank_qr_code);
+            
+            if (file_exists($qrCodePath)) {
+                // Chuyển ảnh thành base64 để embed vào PDF
+                $imageData = base64_encode(file_get_contents($qrCodePath));
+                $imageMimeType = mime_content_type($qrCodePath);
+                
+                $qrCodeHtml = "
+                <img src='data:{$imageMimeType};base64,{$imageData}' 
+                     alt='Payment QR Code' 
+                     style='width: 150px; height: 150px; border: 2px solid #e9ecef; border-radius: 4px; margin: 0 auto 10px; display: block; object-fit: cover;'>
+                ";
+            } else {
+                // Hiển thị thông tin thanh toán nếu không có QR
+                $qrCodeHtml = "
+                <div style='width: 150px; height: 150px; background: white; border: 2px solid #e9ecef; border-radius: 4px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 10px; color: #6c757d; text-align: center; line-height: 1.3; flex-direction: column;'>
+                    <div style='font-weight: bold; margin-bottom: 8px;'>QR Code</div>
+                    <div>Ngân hàng: " . ($config->bank_name ?? 'ACB') . "</div>
+                    <div>TK: " . ($config->company_bank_account_number ?? '218906666') . "</div>
+                    <div style='margin-top: 5px; color: #dc3545; font-weight: bold;'>" . number_format($total, 0, ',', '.') . " VNĐ</div>
+                    <div style='margin-top: 5px; font-size: 9px;'>Ref: " . str_replace('QUOTE-', 'PAY-', $quoteNumber) . "</div>
+                </div>";
+            }
         }
 
         // Chuyển đổi số thành chữ
@@ -602,7 +612,7 @@ class QuoteController extends Controller
                         </tr>
                         <tr>
                             <td style='font-weight: bold; color: #495057;'>Ngân hàng:</td>
-                            <td>" . ($config->bank_name ?? 'Ngân hàng ACB') . "</td>
+                            <td>" . ($config->bank_name ?? 'Ngân hàng Tiền Phong') . "</td>
                         </tr>
                         <tr>
                             <td style='font-weight: bold; color: #495057;'>Số tài khoản:</td>
