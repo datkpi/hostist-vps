@@ -620,7 +620,7 @@ class QuoteController extends Controller
                         </tr>
                         <tr>
                             <td style='font-weight: bold; color: #495057;'>Chủ tài khoản:</td>
-                            <td>" . ($config->company_name ?? 'CÔNG TY TNHH TMDV XD VÀ VC NGUYỄN TUẤN') . "</td>
+                            <td>" . ($config->company_name ?? 'NGUYEN VAN THIEN') . "</td>
                         </tr>
                         <tr>
                             <td style='font-weight: bold; color: #495057;'>Nội dung chuyển khoản:</td>
