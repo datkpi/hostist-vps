@@ -57,7 +57,7 @@ class QuoteController extends Controller
         $config = Config::current();
         $quoteNumber = 'QUOTE-' . date('Ymd') . '-' . str_pad($cart->id, 4, '0', STR_PAD_LEFT);
         $quoteDate = Carbon::now()->format('d/m/Y');
-        $expireDate = Carbon::now()->addDays(30)->format('d/m/Y'); // Tăng thành 30 ngày như mẫu
+        $expireDate = Carbon::now()->addDays(10)->format('d/m/Y'); // Tăng thành 30 ngày như mẫu
         $subtotal = $cart->subtotal;
         
         // Tính thuế và giảm giá
@@ -126,7 +126,7 @@ class QuoteController extends Controller
         // Tạo số báo giá
         $quoteNumber = 'QUOTE-' . date('Ymd') . '-' . str_pad($cart->id, 4, '0', STR_PAD_LEFT);
         $quoteDate = Carbon::now()->format('d/m/Y');
-        $expireDate = Carbon::now()->addDays(30)->format('d/m/Y');
+        $expireDate = Carbon::now()->addDays(10)->format('d/m/Y');
         
         $subtotal = $cart->subtotal;
         $discount = $subtotal * 0; // Giảm giá 10%
@@ -586,7 +586,7 @@ class QuoteController extends Controller
                         <td class='price-column'>" . number_format($afterDiscount, 0, ',', '.') . " VNĐ</td>
                     </tr>
                     <tr class='total-section'>
-                        <td colspan='7' style='text-align: right;'>Thuế VAT 10%</td>
+                        <td colspan='7' style='text-align: right;'>Thuế VAT 8%</td>
                         <td class='price-column'>" . number_format($vat, 0, ',', '.') . " VNĐ</td>
                     </tr>
                     <tr class='total-row'>
