@@ -516,7 +516,7 @@ class QuoteController extends Controller
             <div class='logo-section'>
                 <div class='logo'>LOGO</div>
                 <div>
-                    <div class='company-info'>" . ($config->company_name ?? 'CÔNG TY TNHH TMDV XD VÀ VC NGUYỄN TUẤN') . "</div>
+                    <div class='company-info'>" . ($config->company_name ?? 'CÔNG TY TNHH TMDV QUẢNG CÁO VÀ TỔ CHỨC SỰ KIỆN PHƯƠNG NAM') . "</div>
                     <div style='font-size: 10px; color: #666;'>Technology Solutions</div>
                 </div>
             </div>
@@ -524,7 +524,7 @@ class QuoteController extends Controller
                 <h1>BÁO GIÁ</h1>
                 <div class='quote-date'>
                     NGÀY TẠO: {$quoteDate}<br>
-                    HIỆU LỰC: 30 ngày
+                    HIỆU LỰC: 10 ngày
                 </div>
             </div>
         </div>
@@ -533,8 +533,8 @@ class QuoteController extends Controller
             <div class='company-box'>
                 <h3>BÊN CUNG CẤP DỊCH VỤ</h3>
                 <div class='company-details-content'>
-                    <strong>" . ($config->company_name ?? 'CÔNG TY TNHH TMDV XD VÀ VC NGUYỄN TUẤN') . "</strong><br>
-                    Địa chỉ: " . ($config->company_address ?? 'Số 140 Nguyễn Văn Khối, Phường 8, Quận Gò Vấp, TP HCM') . "<br>
+                    <strong>" . ($config->company_name ?? 'CÔNG TY TNHH TMDV QUẢNG CÁO VÀ TỔ CHỨC SỰ KIỆN PHƯƠNG NAM') . "</strong><br>
+                    Địa chỉ: " . ($config->company_address ?? '45/11 Bành Văn Trân , Phường 7 , Quận Tân Bình ,Thành Phố Hồ Chí Minh') . "<br>
                     Điện thoại: " . ($config->support_phone ?? '0919 985 473') . "<br>
                     Email: " . ($config->support_email ?? 'supposthostit@gmail.com') . "<br>
                 </div>
